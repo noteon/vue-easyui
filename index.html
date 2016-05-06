@@ -4,14 +4,22 @@
     <meta charset="utf-8">
     <title></title>
         <link id="easyui_theme_id" rel="stylesheet" type="text/css" href="bower_components/jquery-easyui/themes/default/easyui.css">
+        
          <link rel="stylesheet" type="text/css" href="bower_components/jquery-easyui/themes/icon.css">
+         
   </head>
   <body>
     <div id="el" prop-message="Hello!"></div>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    
+    <select id="easyui-combo"></select>
+        
+    <script>
+        window.$=require('jquery');
+        window.jQuery=window.$;
+    </script>
     <script src="bower_components/jquery-easyui/jquery.easyui.min.js"></script>
     <script>
-        //console.log('document')
+        console.log($)
         require('./index')
     </script>
   </body>
