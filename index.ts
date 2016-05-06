@@ -46,7 +46,8 @@ let app=new (App as any)({
 
 $(()=>{
     $("#easyui-combo").combobox({
-        idField:"id",
+        width:500,
+        valueField:"id",
         textField:"text",
         data:[{
             "id":1,
