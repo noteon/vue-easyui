@@ -5,103 +5,75 @@ declare var $ :any;
 declare var require:any;
 import Component from 'vue-class-component'
 import * as Vue from 'vue';
+import {EzInputPassword} from './ezShowPwdButton';
+window["Vue"]=Vue;
 
 
-var easyComboBox = {
-  template: '<div><select id="easyui-combo" ></select></div>',
-  ready: function() {
-    let self=this as any;
-    //self.greet();
-    let $el=$(self.$el);
+
+Vue.directive('ez-select', {
+  twoWay: true,
+  priority: 1000,
+
+  params: ['options'],
     
-        
-    $el.find("#easyui-combo").combobox({
-        width:500,
-        valueField:"id",
-        textField:"text",
-        data:[{
-            "id":1,
-            "text":"text1"
-        },{
-            "id":2,
-            "text":"text2"
-        },{
-            "id":3,
-            "text":"text3",
-            "selected":true
-        },{
-            "id":4,
-            "text":"text4"
-        },{
-            "id":5,
-            "text":"text5"
-        }],
-        onChange:(newValue,oldValue)=>{
-            console.log("onChange", newValue, oldValue);
-           //self.val=$el.find("#easyui-combo").combobox("getText",newValue); 
-        }
-    });
-  }}
-
-@Component({
-  props: {
-    propMessage: String
-  },
-  watch:{
-    'val':(oldValue,value)=>{
-        console.log({oldValue,value})
+  bind: function () {
+    var self = this;
+    let options=this.params.options || {};
+    if (!options.onSelect){
+         options.onSelect=(record) => {
+           //console.log("select",record);
+           self.set(record&& record.value);
+         }
     }
+     
+    
+    
+    let comboBox=$(this.el).combobox(options);
   },
-  components: {
-    easyComboBox
+  update: function (value) {
+    $(this.el).combobox('setValue', value);
   },
-  
-  template: `
-    <div>
-      <input v-model="msg">
-      <p>prop: {{propMessage}}</p>
-      <p>msg: {{msg}}</p>
-      <p>computed msg: {{computedMsg}}</p>
-      <button @click="greet">Greet</button>
-      <br>
-      
-      <input v-model="val">
-      
-      <easy-combo-box></easy-combo-box>
-    </div>
-  `
+  unbind: function () {
+    $(this.el).combobox('destroy')
+  }
 })
-class App{
-  // return initial data
-  data () {
-    return {
-      msg: 123,
-      val:"text3",
-    }
-}
 
-  // lifecycle hook
-  ready () {
-    
-  }
-
-  // computed
-  get computedMsg () {
-    return 'computed ' + this["msg"]
-  }
-
-  // method
-  greet () {
-    console.log('greeting: ' + this["msg"])
-  }
-}
 
 
 $(()=>{
     setTimeout(()=>{
         // mount
-        window['vueComp']=new (App as any)({
-            el:$('#el')[0]
+        window['vueComp']=new Vue({
+            el:'#app',
+            components:{
+               'ez-input-password': EzInputPassword
+            },
+            data:{
+              selected:1,
+              items:[{
+                value:0,
+                text:"default"
+              },
+              {
+                value:1,
+                text:"value1"
+              },
+              {
+                value:2,
+                text:"value2"
+              }],
+              password:"www.123.com"
+            },
+            template:`<div><select v-ez-select="selected" :options="{editable: false,panelHeight: 42,width: 400}">
+                <option v-for="item in items" :value="item.value">{{item.text}}</option>
+            </select><p>selected:{{selected|json}}</p>
+            <br>
+            
+            <span>My Password:{{password}}</span>
+            
+            <ez-input-password :password-field.sync="password" show-icon-class="icon-ok" hide-icon-class="icon-no" password-label="Passphrase"></ez-input-password>
+            </div>
+            `
         })
 
     },1000)
