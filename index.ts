@@ -46,7 +46,7 @@ Vue.directive('ez-if',function(val,oldVal){
 
 Vue.mixin({
   created: function () {
-    //console.log('mixin hook created called')
+    console.log('mixin hook created called')
   },
   
   compiled: function () {
@@ -77,7 +77,7 @@ Vue.mixin({
     $.parser.parse(this.vm.$el);
   }
 
-})()
+})();
 
 $(()=>{
     setTimeout(()=>{
@@ -87,23 +87,20 @@ $(()=>{
             
             components:{
                'ez-input-password': EzInputPassword,
-              'part1':{
-                data:()=>({
-                  checked:false,
-                }),
-                template:`<div> 
-                <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">Display: {{ checked }}</label>
-                
-                 <select id="cc" class="easyui-combobox" name="dept" style="width:200px;"  v-if="checked">
+               'part1':{
+                 props:["password"],
+                 template:`
+                 <div>Password:{{password}}</div>
+  <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
       <option value="aa">aitem1</option>
       <option>bitem2</option>
       <option>bitem3</option>
       <option>ditem4</option>
       <option>eitem5</option>
-  </select></div>
-`
-              }
+  </select>
+                 
+                 `
+               }
             },
             data:{
               selected:1,
@@ -144,7 +141,11 @@ $(()=>{
             
             <br>
             
-  <part1></part1>      
+                <input type="checkbox" id="checkbox" v-model="checked">
+            <label for="checkbox">Display: {{ checked }}</label>
+            
+<part1  v-if="checked" :password="password">            
+</part1>        
             <br>
             
             <span>My Password:{{password}}</span>
@@ -155,8 +156,6 @@ $(()=>{
             </div>
             `,
             compiled:function(){
-               
-
             },
             ready:function(){
                
