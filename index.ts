@@ -7,38 +7,38 @@ declare var _:any;
 import Component from 'vue-class-component'
 import * as Vue from 'vue';
 import {EzInputPassword} from './ezShowPwdButton';
-import  './ezSelect';
+import  './ezModel';
 window["Vue"]=Vue;
 
 
 
-Vue.directive('ez-select', {
-  twoWay: true,
-  priority: 1000,
+// Vue.directive('ez-select', {
+//   twoWay: true,
+//   priority: 1000,
 
-  params: ['options'],
+//   params: ['options'],
     
-  bind: function () {
-    var self = this;
-    let options=this.params.options || {};
-    if (!options.onSelect){
-         options.onSelect=(record) => {
-           //console.log("select",record);
-           self.set(record&& record.value);
-         }
-    }
+//   bind: function () {
+//     var self = this;
+//     let options=this.params.options || {};
+//     if (!options.onSelect){
+//          options.onSelect=(record) => {
+//            //console.log("select",record);
+//            self.set(record&& record.value);
+//          }
+//     }
      
     
     
-    let comboBox=$(this.el).combobox(options);
-  },
-  update: function (value) {
-    $(this.el).combobox('setValue', value);
-  },
-  unbind: function () {
-    $(this.el).combobox('destroy')
-  }
-})
+//     let comboBox=$(this.el).combobox(options);
+//   },
+//   update: function (value) {
+//     $(this.el).combobox('setValue', value);
+//   },
+//   unbind: function () {
+//     $(this.el).combobox('destroy')
+//   }
+// })
 
 Vue.directive('ez-if',function(val,oldVal){
   console.log('ez-if changed',val,oldVal)
@@ -135,10 +135,13 @@ $(()=>{
               }],
               password:"www.123.com",
               checked:false,
+              num:5555555,
+              text:"textbox",
+              replicaReadPreference:"primaryPreferred"
             },
             template:`
 <div>
-               <input type="checkbox" id="checkbox" v-model="checked">
+               <!--<input type="checkbox" id="checkbox" v-model="checked">
               <label for="checkbox">Display: {{ checked }}</label>
             
               <part1  v-if="checked" :password="password">            
@@ -159,7 +162,7 @@ $(()=>{
             <div class="pure-u-1 no-gutter" v-if="checked">
                 <label class='pure-u-4-24'>Read Preference</label>
                 <div class="pure-u-20-24">
-                  <select v-ez-select="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
+                  <select v-ez-model="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
                         <option value="primary">primary</option>
                         <option value="primaryPreferred">primaryPreferred</option>
                         <option value="secondary">secondary</option>
@@ -171,13 +174,26 @@ $(()=>{
                 <my-datalist></my-datalist>
 
           </div>
-                    
-	
-            
-            <span>My Password:{{password}}</span>
+                    -->
+            <select v-ez-model="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
+                  <option value="primary">primary</option>
+                  <option value="primaryPreferred">primaryPreferred</option>
+                  <option value="secondary">secondary</option>
+                  <option value="secondaryPreferred">secondaryPreferred</option>
+                  <option value="nearest">nearest</option>
+            </select>
+            <br>
+            <input type="text" v-ez-model="num" class="easyui-numberbox" value="100" data-options="min:0,precision:2,groupSeparator:','">
+	          <br>
+
+            <input class="easyui-textbox" v-ez-model="text" data-options="iconCls:'icon-search'" style="width:300px">
+            <br>
+
+            <pre>{{ $data | json 4}}</pre>
 </div>
             `,
             compiled:function(){
+
             },
             ready:function(){
                
