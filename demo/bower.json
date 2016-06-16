@@ -1,0 +1,22 @@
+{
+  "name": "vue-easyui",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "qinghai <noteon@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-easyui": "jquery.easyui#*"
+  }
+}

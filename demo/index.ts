@@ -1,4 +1,4 @@
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 
 
 declare var $ :any;
@@ -7,83 +7,11 @@ declare var _:any;
 import Component from 'vue-class-component'
 import * as Vue from 'vue';
 import {EzInputPassword} from './ezShowPwdButton';
-import  './ezModel';
+import  '../ezModel';
 window["Vue"]=Vue;
 
 
 
-// Vue.directive('ez-select', {
-//   twoWay: true,
-//   priority: 1000,
-
-//   params: ['options'],
-    
-//   bind: function () {
-//     var self = this;
-//     let options=this.params.options || {};
-//     if (!options.onSelect){
-//          options.onSelect=(record) => {
-//            //console.log("select",record);
-//            self.set(record&& record.value);
-//          }
-//     }
-     
-    
-    
-//     let comboBox=$(this.el).combobox(options);
-//   },
-//   update: function (value) {
-//     $(this.el).combobox('setValue', value);
-//   },
-//   unbind: function () {
-//     $(this.el).combobox('destroy')
-//   }
-// })
-
-interface MyIntf{
-  num:number;
-}
-
-Vue.directive('ez-if',function(val,oldVal){
-  console.log('ez-if changed',val,oldVal)
-  // $.parser.parse(); 
- } 
-)
-
-Vue.mixin({
-  created: function () {
-    console.log('mixin hook created called')
-  },
-  
-  compiled: function () {
-    if ($ && $.parser){
-        $.parser.parse(this.$el);
-    }
-  },
-  attached:function(){
-    //console.log("attached");
-  },
-  dettached:function(){
-    //console.log("dettached");
-  },
-  
-  destroy:function(){
-    //console.log("called destroyed");
-  }
-});
-
-(()=>{
-  let vueIf=Vue.directive('if');
-
-  let oldInsert=vueIf.insert;
-
-  vueIf.insert=function(){
-    oldInsert.apply(this);
-    
-    $.parser.parse(this.vm.$el);
-  }
-
-})();
 
 $(()=>{
     setTimeout(()=>{
@@ -186,13 +114,16 @@ $(()=>{
             template:`
 <div>
 
-               <!--<input type="checkbox" id="checkbox" v-model="checked">
-              <label for="checkbox">Display: {{ checked }}</label>
+              <input type="checkbox" id="checkbox" v-model="checked">
+
+              <label for="checkbox">Test v-if, Display: {{ checked }}</label>
             
               <part1  v-if="checked" :password="password">            
               </part1>     
               
               <div v-if="checked">
+                <input type="text" v-ez-model="num" class="easyui-numberbox" value="100" data-options="min:0,precision:2,groupSeparator:','">
+               <hr>
                 <div>Password:{{password}}</div>
                 <select id="cc" class="easyui-combobox" name="dept" style="width:'100%';">
                     <option value="aa">aitem1</option>
@@ -219,7 +150,7 @@ $(()=>{
                 <my-datalist></my-datalist>
 
           </div>
-                    -->
+                    
             <select v-ez-model="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
                   <option value="primary">primary</option>
                   <option value="primaryPreferred">primaryPreferred</option>

@@ -1,4 +1,4 @@
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 declare var $ :any;
 
 import Component from "vue-class-component";

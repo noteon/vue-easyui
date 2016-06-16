@@ -1,6 +1,33 @@
 "use strict";
 var Vue = require('vue');
 var moment = require("moment");
+(function () {
+    var vueIf = Vue.directive('if');
+    var oldInsert = vueIf.insert;
+    vueIf.insert = function () {
+        oldInsert.apply(this);
+        $ && $.parser && this.vm && $.parser.parse(this.vm.$el);
+    };
+})();
+Vue.mixin({
+    created: function () {
+        //console.log('mixin hook created called')
+    },
+    compiled: function () {
+        if ($ && $.parser) {
+            $.parser.parse(this.$el);
+        }
+    },
+    attached: function () {
+        //console.log("attached");
+    },
+    dettached: function () {
+        //console.log("dettached");
+    },
+    destroy: function () {
+        //console.log("called destroyed");
+    }
+});
 //e.g.
 // new Vue({
 //       el:'#app',
@@ -10,7 +37,7 @@ var moment = require("moment");
 //         {value:1, text:"value1" },
 //         {value:2, text:"value2" }]
 //       },
-//       template:`<div><select v-ez-select="selected" :options="{editable: false,panelHeight: 42}">
+//       template:`<div><select v-ez-model="selected" :options="{editable: false,panelHeight: 42}">
 //           <option v-for="item in items" :value="item.value">{{item.text}}</option>
 //         </select>  <p>selected:{{selected|json}}</p></div>`
 Vue.directive('ez-model', {
