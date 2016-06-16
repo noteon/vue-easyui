@@ -1,6 +1,6 @@
 {
   "name": "vue-easyui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "ezModel.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "vue": "^1.0.21"
   },
   "devDependencies": {
+    "electron-prebuilt": "^1.2.2",
     "jquery": "^3.0.0",
     "vue-class-component": "^3.2.0"
   }

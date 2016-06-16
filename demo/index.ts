@@ -150,7 +150,7 @@ $(()=>{
                 <my-datalist></my-datalist>
 
           </div>
-                    
+                  <hr>  
             <select v-ez-model="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
                   <option value="primary">primary</option>
                   <option value="primaryPreferred">primaryPreferred</option>
