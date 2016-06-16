@@ -47,6 +47,7 @@ Vue.directive('ez-model', {
     params: ['options'],
     ezClass: "",
     initEasyUiComp: function (value) {
+        var _this = this;
         var self = this;
         var $el = $(self.el);
         var options = this.params.options || {};
@@ -60,45 +61,52 @@ Vue.directive('ez-model', {
             var cls = $el.attr('class').split(/\s+/).find(function (it) { return it.indexOf("easyui-") === 0; });
             return cls.split('-').slice(1).join('-');
         })();
+        if (this.ezClass === "datebox" || this.ezClass === "datetimebox") {
+            $el[this.ezClass](options);
+            setTimeout(function () { return _this.trySetValue(value, true); }, 0);
+            return;
+        }
         if (this.ezClass === "calendar") {
             options.current = value;
+        }
+        else if (this.ezClass === "switchbutton") {
+            options.checked = value;
         }
         else {
             options.value = value;
         }
         $el[this.ezClass](options);
     },
+    trySetValue: function (value, ignoreMultiple) {
+        var self = this;
+        var $el = $(self.el);
+        var isMultipleValues = ignoreMultiple ? false : !!$el[this.ezClass]("options").multiple;
+        var setValMethod = isMultipleValues ? "setValues" : "setValue";
+        if (self.ezClass === "calendar") {
+            setValMethod = "moveTo";
+        }
+        try {
+            if (self.ezClass === "datebox") {
+                value = value && moment(value).format('M/D/Y');
+            }
+            else if (self.ezClass === "datetimebox") {
+                value = value && moment(value).format('M/D/Y HH:mm:ss');
+            }
+            $el[this.ezClass](setValMethod, value);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    },
     bind: function () {
     },
     update: function (value) {
-        var _this = this;
-        var self = this;
-        var $el = $(self.el);
-        var trySetValue = function () {
-            var isMultipleValues = !!$el[_this.ezClass]("options").multiple;
-            var setValMethod = isMultipleValues ? "setValues" : "setValue";
-            if (self.ezClass === "calendar") {
-                setValMethod = "moveTo";
-            }
-            try {
-                if (self.ezClass === "datebox") {
-                    value = value && moment(value).format('M/D/Y');
-                }
-                else if (self.ezClass === "datetimebox") {
-                    value = value && moment(value).format('M/D/Y HH:mm:ss');
-                }
-                $el[_this.ezClass](setValMethod, value);
-            }
-            catch (error) {
-                console.error(error);
-            }
-        };
         if (this.isFirstCall) {
             this.isFirstCall = false;
-            this.initEasyUiComp();
+            this.initEasyUiComp(value);
         }
         else {
-            trySetValue();
+            this.trySetValue(value);
         }
     },
     unbind: function () {

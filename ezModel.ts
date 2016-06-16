@@ -79,10 +79,19 @@ Vue.directive('ez-model', {
        let cls=$el.attr('class').split(/\s+/).find((it)=>it.indexOf("easyui-")===0);
        return cls.split('-').slice(1).join('-');      
     })(); 
+    if (this.ezClass==="datebox" || this.ezClass==="datetimebox"){
+       $el[this.ezClass](options);
+
+       setTimeout(()=>this.trySetValue(value,true),0);
+
+       return;  
+    }
     
     if (this.ezClass==="calendar"){
       options.current=value;
-    }else{
+    }else if (this.ezClass==="switchbutton"){
+      options.checked=value;
+    } else {
       options.value=value;
     }
 
@@ -90,19 +99,16 @@ Vue.directive('ez-model', {
 
   },
 
-  bind: function () {
-  },
 
-  update: function (value) {
+   trySetValue: function(value,ignoreMultiple){
     let self=this;
     let $el= $(self.el);
-    
 
-    let trySetValue=()=>{
-      let isMultipleValues= !!$el[this.ezClass]("options").multiple;
-      let setValMethod=isMultipleValues?"setValues":"setValue";
+    let isMultipleValues=ignoreMultiple?false:!!$el[this.ezClass]("options").multiple;
 
-      if (self.ezClass==="calendar"){
+    let setValMethod=isMultipleValues?"setValues":"setValue";
+
+    if (self.ezClass==="calendar"){
           setValMethod="moveTo";
       }
 
@@ -117,13 +123,17 @@ Vue.directive('ez-model', {
       } catch (error) {
         console.error(error);
       }
-    }
+  },
 
+  bind: function () {
+  },
+
+  update: function (value) {
     if (this.isFirstCall){
        this.isFirstCall=false;
-       this.initEasyUiComp();
+       this.initEasyUiComp(value);
     }else{
-      trySetValue();
+      this.trySetValue(value);
     }
 
   },
