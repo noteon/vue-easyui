@@ -41,20 +41,29 @@ Vue.directive('ez-model', {
        let cls=$el.attr('class').split(/\s+/).find((it)=>it.indexOf("easyui-")===0);
        return cls.split('-').slice(1).join('-');      
     })(); 
-    console.log({ezClass:this.ezClass});
+    //console.log({ezClass:this.ezClass});
 
     $el[this.ezClass](options);
 },
 
   update: function (value) {
     let $el= $(this.el);
+
+    let trySetValue=()=>{
+      try {
+        $el[this.ezClass]('setValue', value);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     if (this.isFirstCall){
        this.isFirstCall=false;
        setTimeout(()=>{
-          $el[this.ezClass]('setValue', value);   
+         trySetValue();
        })
     }else{
-      $el[this.ezClass]('setValue', value);
+      trySetValue();
     }
 
   },

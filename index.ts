@@ -137,7 +137,16 @@ $(()=>{
               checked:false,
               num:5555555,
               text:"textbox",
-              replicaReadPreference:"primaryPreferred"
+              date: new Date(),
+              switch: true,
+              replicaReadPreference:"primaryPreferred",
+              file: "/tmp/spikes",
+              numberspin:100,
+              numberSpinnerOptions:{
+                    onChange: function(value){
+                        console.log("onChange called",value)
+                    }
+                }
             },
             template:`
 <div>
@@ -182,12 +191,22 @@ $(()=>{
                   <option value="secondaryPreferred">secondaryPreferred</option>
                   <option value="nearest">nearest</option>
             </select>
-            <br>
+            <hr>
             <input type="text" v-ez-model="num" class="easyui-numberbox" value="100" data-options="min:0,precision:2,groupSeparator:','">
-	          <br>
+            <hr>
 
             <input class="easyui-textbox" v-ez-model="text" data-options="iconCls:'icon-search'" style="width:300px">
-            <br>
+            <hr>
+            <input class="easyui-datetimespinner" v-ez-model="date" style="width:100%;height:26px;">
+            <hr>
+
+            <input class="easyui-switchbutton" v-ez-model="switch">
+            <hr>
+            <input class="easyui-filebox" v-ez-model="file"  style="width:50%">
+            <hr>           
+
+            <input class="easyui-numberspinner" v-ez-model="numberspin" style="width:100%;height:26px;" :options="numberSpinnerOptions">
+            <hr>             
 
             <pre>{{ $data | json 4}}</pre>
 </div>
