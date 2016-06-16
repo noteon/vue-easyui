@@ -6,11 +6,66 @@
         <link id="easyui_theme_id" rel="stylesheet" type="text/css" href="bower_components/jquery-easyui/themes/default/easyui.css">
         
          <link rel="stylesheet" type="text/css" href="bower_components/jquery-easyui/themes/icon.css">
-         
+         <!--<link rel="stylesheet" type="text/css" href="css/select-css.css">-->
+         <!--<link rel="stylesheet" type="text/css" href="css/select-css-compat.css">-->
+         <style>
+           
+           /* These are the "theme" styles for our button applied via separate button class, style as you like */
+/* Some basic page styles */
+body {
+	background-color: #fff;
+	font-family: sans-serif;
+	margin: 4% 10%;
+}
+
+/* Label styles: style as needed */
+label {
+	display:block;
+	margin-top:2em;
+	font-size: 0.9em;
+	color:#777;
+}
+
+/* These are the "theme" styles for our button applied via separate button class, style as you like */
+
+
+select {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    background-color: #F07575; /* fallback color if gradients are not supported */
+    background-image: url(bower_components/jquery-easyui/themes/icons/ok.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
+    background-image: url(bower_components/jquery-easyui/themes/icons/ok.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Fx (3.6 to 15) */
+    background-image: url(bower_components/jquery-easyui/themes/icons/ok.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of IE 10*/
+    background-image: url(bower_components/jquery-easyui/themes/icons/ok.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */ 
+    background-image: url(bower_components/jquery-easyui/themes/icons/ok.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    color: #555;
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+         </style>  
   </head>
   <body>
+
+    
     <div id='app'></div>
-        
+
     <script>
         window.$=require('jquery');
         window.jQuery=window.$;

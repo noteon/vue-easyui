@@ -3,9 +3,11 @@
 
 declare var $ :any;
 declare var require:any;
+declare var _:any;
 import Component from 'vue-class-component'
 import * as Vue from 'vue';
 import {EzInputPassword} from './ezShowPwdButton';
+import  './ezSelect';
 window["Vue"]=Vue;
 
 
@@ -100,6 +102,21 @@ $(()=>{
   </select>
                  
                  `
+               },
+               "my-datalist":{
+                 template:`<ul id="dl" class="easyui-datalist" title="Basic DataList">
+                <li value="AL">Alabama</li>
+                <li value="AK">Alaska</li>
+                <li value="AZ">Arizona</li>
+              </ul>`,
+                ready:function(){
+                    console.log($('#dl').length);
+                    $('#dl').datalist({
+                      title:"myBasic",
+                      checkbox: true,
+                      lines: true                
+                    })
+                }
                }
             },
             data:{
@@ -119,47 +136,53 @@ $(()=>{
               password:"www.123.com",
               checked:false,
             },
-            template:`<div><select v-ez-select="selected" :options="{editable: false,panelHeight: 42,width: 400}">
-                <option v-for="item in items" :value="item.value">{{item.text}}</option>
-            </select><p>selected:{{selected|json}}</p>
-            <br>
-            <br>
-            <input class="easyui-combobox" name="language"
-        data-options="
-            valueField:'id',
-            textField:'text',
-            panelHeight:'auto',
-            onSelect:function(record){
-                alert(record.text)
-            }">
-            <br>
-            <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">easyui</a>
-            <br>
-            <br>
+            template:`
+<div>
+               <input type="checkbox" id="checkbox" v-model="checked">
+              <label for="checkbox">Display: {{ checked }}</label>
             
-            
-            
-            <br>
-            
-                <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">Display: {{ checked }}</label>
-            
-<part1  v-if="checked" :password="password">            
-</part1>        
-            <br>
+              <part1  v-if="checked" :password="password">            
+              </part1>     
+              
+              <div v-if="checked">
+                <div>Password:{{password}}</div>
+                <select id="cc" class="easyui-combobox" name="dept" style="width:'100%';">
+                    <option value="aa">aitem1</option>
+                    <option>bitem2</option>
+                    <option>bitem3</option>
+                    <option>ditem4</option>
+                    <option>eitem5</option>
+                </select>
+             </div>   
+             
+             
+            <div class="pure-u-1 no-gutter" v-if="checked">
+                <label class='pure-u-4-24'>Read Preference</label>
+                <div class="pure-u-20-24">
+                  <select v-ez-select="replicaReadPreference" class="easyui-combobox" :options="{editable: false, panelHeight:102, width: '100%'}">
+                        <option value="primary">primary</option>
+                        <option value="primaryPreferred">primaryPreferred</option>
+                        <option value="secondary">secondary</option>
+                        <option value="secondaryPreferred">secondaryPreferred</option>
+                        <option value="nearest">nearest</option>
+                  </select>
+                </div>
+               
+                <my-datalist></my-datalist>
+
+          </div>
+                    
+	
             
             <span>My Password:{{password}}</span>
-            
-            
-            
-             <!--<ez-input-password :password-field.sync="password" show-icon-class="icon-ok" hide-icon-class="icon-no" password-label="Passphrase" v-if="checked"></ez-input-password>-->
-            </div>
+</div>
             `,
             compiled:function(){
             },
             ready:function(){
                
                $('#btn').linkbutton({iconCls:"icon-search"});
+              
             }
         })
 
