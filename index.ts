@@ -138,6 +138,7 @@ $(()=>{
               num:5555555,
               text:"textbox",
               date: new Date(),
+              calendar: new Date(2015,2,1),
               switch: true,
               replicaReadPreference:"primaryPreferred",
               file: "/tmp/spikes",
@@ -146,7 +147,13 @@ $(()=>{
                     onChange: function(value){
                         console.log("onChange called",value)
                     }
-                }
+                },
+
+              progressValue:60,
+              dateboxValue: new Date(2001,8,11),//2011/9/11
+              searchBoxValue:"mongobooster" ,
+              combogridValue:1,
+              datetimeBoxValue: new Date(),
             },
             template:`
 <div>
@@ -202,11 +209,45 @@ $(()=>{
 
             <input class="easyui-switchbutton" v-ez-model="switch">
             <hr>
-            <input class="easyui-filebox" v-ez-model="file"  style="width:50%">
-            <hr>           
+            <!--<input class="easyui-filebox" v-ez-model="file"  style="width:50%">-->
+            <!--<hr>           -->
 
             <input class="easyui-numberspinner" v-ez-model="numberspin" style="width:100%;height:26px;" :options="numberSpinnerOptions">
-            <hr>             
+            <hr>     
+
+             <div class="easyui-calendar" v-ez-model="calendar"  style="width:250px;height:250px;"></div>
+             <hr>        
+
+             <div class="easyui-progressbar" v-ez-model="progressValue" style="width:400px;"></div>
+
+             <hr>
+             <input class="easyui-datebox" v-ez-model="dateboxValue"  style="width:100%;height:26px">
+
+            <hr>
+            <input class="easyui-searchbox"  v-ez-model="searchBoxValue"   data-options="prompt:'Please Input Value'" style="width:300px"></input>
+
+            <hr>
+                <select class="easyui-combogrid" v-ez-model="combogridValue"   style="width:100%" data-options="
+                    panelWidth: 500,
+                    idField: 'id',
+                    textField: 'name',
+                    data:[
+                     { id: 1, name:'name1'},
+                     { id: 2, name:'name2'},
+                     { id: 3, name:'name3'},
+                     { id: 4, name:'name4'},
+                    ],
+                    method: 'get',
+                    columns: [[
+                        {field:'id',title:'Item ID',width:80},
+                        {field:'name',title:'Product',width:120},
+                    ]],
+                    fitColumns: true
+                ">
+            </select>
+
+            <hr>
+            <input class="easyui-datetimebox" v-ez-model="datetimeBoxValue"  style="width:100%;height:26px">
 
             <pre>{{ $data | json 4}}</pre>
 </div>

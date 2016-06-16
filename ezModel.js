@@ -1,5 +1,6 @@
 "use strict";
 var Vue = require('vue');
+var moment = require("moment");
 //e.g.
 // new Vue({
 //       el:'#app',
@@ -37,10 +38,21 @@ Vue.directive('ez-model', {
     },
     update: function (value) {
         var _this = this;
-        var $el = $(this.el);
+        var self = this;
+        var $el = $(self.el);
         var trySetValue = function () {
+            var setValMethod = "setValue";
+            if (self.ezClass === "calendar") {
+                setValMethod = "moveTo";
+            }
             try {
-                $el[_this.ezClass]('setValue', value);
+                if (self.ezClass === "datebox") {
+                    value = value && moment(value).format('M/D/Y');
+                }
+                else if (self.ezClass === "datetimebox") {
+                    value = value && moment(value).format('M/D/Y HH:mm:ss');
+                }
+                $el[_this.ezClass](setValMethod, value);
             }
             catch (error) {
                 console.error(error);

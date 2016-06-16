@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^2.2.3",
+    "moment": "^2.13.0",
     "vue": "^1.0.21"
   }
 }

@@ -1,7 +1,9 @@
 declare var $ :any;
 
+
 import Component from "vue-class-component";
 import * as Vue from 'vue';
+import * as moment from "moment";
 //e.g.
 // new Vue({
 //       el:'#app',
@@ -47,11 +49,24 @@ Vue.directive('ez-model', {
 },
 
   update: function (value) {
-    let $el= $(this.el);
+    let self=this;
+    let $el= $(self.el);
+    
 
     let trySetValue=()=>{
+      let setValMethod="setValue";
+      if (self.ezClass==="calendar"){
+          setValMethod="moveTo";
+      }
+
       try {
-        $el[this.ezClass]('setValue', value);
+        if (self.ezClass==="datebox"){
+            value=value && moment(value).format('M/D/Y')
+        }else if (self.ezClass==="datetimebox"){
+            value=value && moment(value).format('M/D/Y HH:mm:ss')
+        }
+
+         $el[this.ezClass](setValMethod, value);
       } catch (error) {
         console.error(error);
       }
