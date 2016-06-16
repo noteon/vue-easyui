@@ -46,7 +46,7 @@ Vue.directive('ez-model', {
     isFirstCall: true,
     params: ['options'],
     ezClass: "",
-    bind: function () {
+    initEasyUiComp: function (value) {
         var self = this;
         var $el = $(self.el);
         var options = this.params.options || {};
@@ -60,8 +60,15 @@ Vue.directive('ez-model', {
             var cls = $el.attr('class').split(/\s+/).find(function (it) { return it.indexOf("easyui-") === 0; });
             return cls.split('-').slice(1).join('-');
         })();
-        //console.log({ezClass:this.ezClass});
+        if (this.ezClass === "calendar") {
+            options.current = value;
+        }
+        else {
+            options.value = value;
+        }
         $el[this.ezClass](options);
+    },
+    bind: function () {
     },
     update: function (value) {
         var _this = this;
@@ -88,9 +95,7 @@ Vue.directive('ez-model', {
         };
         if (this.isFirstCall) {
             this.isFirstCall = false;
-            setTimeout(function () {
-                trySetValue();
-            });
+            this.initEasyUiComp();
         }
         else {
             trySetValue();
