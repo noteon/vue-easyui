@@ -154,6 +154,22 @@ $(()=>{
               searchBoxValue:"mongobooster" ,
               combogridValue:1,
               datetimeBoxValue: new Date(),
+              timeSpinnerValue:"11:35",
+
+              combotreeValue:11,
+              comboTreeOptions:{
+                 data:[{
+                  id: 1,
+                  text: 'Languages',
+                  children: [{
+                    id: 11,
+                    text: 'Java'
+                  },{
+                    id: 12,
+                    text: 'C++'
+                  }]
+                }] 
+              }
             },
             template:`
 <div>
@@ -247,7 +263,15 @@ $(()=>{
             </select>
 
             <hr>
-            <input class="easyui-datetimebox" v-ez-model="datetimeBoxValue"  style="width:100%;height:26px">
+             <input class="easyui-datetimebox" v-ez-model="datetimeBoxValue"  style="width:100%;height:26px">
+
+            <hr>
+            <input class="easyui-timespinner" v-ez-model="timeSpinnerValue" style="width:100%;height:26px">
+
+          <hr>    
+          <select class="easyui-combotree" v-ez-model="combotreeValue"  style="width:200px;"
+                  :options="comboTreeOptions">
+          </select>            
 
             <pre>{{ $data | json 4}}</pre>
 </div>
