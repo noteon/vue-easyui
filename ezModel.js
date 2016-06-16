@@ -41,7 +41,8 @@ Vue.directive('ez-model', {
         var self = this;
         var $el = $(self.el);
         var trySetValue = function () {
-            var setValMethod = "setValue";
+            var isMultipleValues = !!$el[_this.ezClass]("options").multiple;
+            var setValMethod = isMultipleValues ? "setValues" : "setValue";
             if (self.ezClass === "calendar") {
                 setValMethod = "moveTo";
             }

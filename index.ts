@@ -40,6 +40,10 @@ window["Vue"]=Vue;
 //   }
 // })
 
+interface MyIntf{
+  num:number;
+}
+
 Vue.directive('ez-if',function(val,oldVal){
   console.log('ez-if changed',val,oldVal)
   // $.parser.parse(); 
@@ -145,19 +149,27 @@ $(()=>{
               numberspin:100,
               numberSpinnerOptions:{
                     onChange: function(value){
-                        console.log("onChange called",value)
+                        console.log("nummbersSpinner onChange called",value)
                     }
                 },
 
               progressValue:60,
-              dateboxValue: new Date(2001,8,11),//2011/9/11
+              dateboxValue: new Date(2001,8,11),//2011/9/11,
+              dateboxOptions:{
+                validator: function(date){
+                  if (date.getDay() == 1){return true;}
+                  else {return false;}
+                }
+              },
               searchBoxValue:"mongobooster" ,
               combogridValue:1,
               datetimeBoxValue: new Date(),
               timeSpinnerValue:"11:35",
 
-              combotreeValue:11,
+              combotreeValue:[11],
               comboTreeOptions:{
+                 multiple:true,
+                 onlyLeafCheck:true,
                  data:[{
                   id: 1,
                   text: 'Languages',
@@ -169,10 +181,11 @@ $(()=>{
                     text: 'C++'
                   }]
                 }] 
-              }
+              },
             },
             template:`
 <div>
+
                <!--<input type="checkbox" id="checkbox" v-model="checked">
               <label for="checkbox">Display: {{ checked }}</label>
             
@@ -237,7 +250,7 @@ $(()=>{
              <div class="easyui-progressbar" v-ez-model="progressValue" style="width:400px;"></div>
 
              <hr>
-             <input class="easyui-datebox" v-ez-model="dateboxValue"  style="width:100%;height:26px">
+             <input class="easyui-datebox" v-ez-model="dateboxValue"  style="width:100%;height:26px" :options="dateboxOptions">
 
             <hr>
             <input class="easyui-searchbox"  v-ez-model="searchBoxValue"   data-options="prompt:'Please Input Value'" style="width:300px"></input>
@@ -281,7 +294,17 @@ $(()=>{
             },
             ready:function(){
                
+
                $('#btn').linkbutton({iconCls:"icon-search"});
+
+               $('.easyui-datebox').datebox().datebox('calendar').calendar({
+                validator: function(date){
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    return d1<=date && date<=d2;
+                }
+            });
               
             }
         })
