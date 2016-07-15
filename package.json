@@ -1,6 +1,6 @@
 {
   "name": "vue-easyui",
-  "version": "0.2.4",
+  "version": "0.3.1",
   "description": "",
   "main": "ezModel.js",
   "scripts": {

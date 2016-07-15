@@ -12,7 +12,7 @@ import * as moment from "moment";
 
   vueIf.insert=function(){
     oldInsert.apply(this);
-    $ && $.parser && this.vm && $.parser.parse(this.vm.$el);
+    $ && this.frag && this.frag.node && $.parser && this.vm && $.parser.parse(this.frag.node);
   }
 
 })()
