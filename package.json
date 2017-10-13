@@ -1,6 +1,6 @@
 {
   "name": "vue-easyui",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "",
   "main": "ezModel.js",
   "scripts": {
@@ -9,9 +9,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "moment": "^2.13.0",
-    "vue": "^1.0.21"
+  "peerDependencies": {
+    "moment": "^2",
+    "vue": "^1"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.2.2",
