@@ -68,7 +68,7 @@ Vue.directive('ez-model', {
     let options=this.params.options || {};
 
     let oldOnChange=options.onChange;
-    options.onChange=function (newVal,oldVal) {
+    options.onChange=function (newVal,_oldVal) {
        if (oldOnChange)
            oldOnChange.apply(this,arguments);
 

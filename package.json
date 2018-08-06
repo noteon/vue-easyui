@@ -1,10 +1,11 @@
 {
   "name": "vue-easyui",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "main": "ezModel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
     "start": "electron demo/main.js"
   },
   "author": "",
@@ -14,8 +15,10 @@
     "vue": "^1"
   },
   "devDependencies": {
+    "@types/moment": "^2.13.0",
     "electron-prebuilt": "^1.2.2",
     "jquery": "^3.0.0",
+    "typescript": "^3.0.1",
     "vue-class-component": "^3.2.0"
   }
 }

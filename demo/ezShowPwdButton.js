@@ -5,9 +5,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="../typings/tsd.d.ts" />
 var vue_class_component_1 = require("vue-class-component");
-var EzInputPassword = (function () {
+var EzInputPassword = /** @class */ (function () {
     function EzInputPassword() {
     }
     // lifecycle hook

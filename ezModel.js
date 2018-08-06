@@ -1,5 +1,6 @@
 "use strict";
-var Vue = require('vue');
+Object.defineProperty(exports, "__esModule", { value: true });
+var Vue = require("vue");
 var moment = require("moment");
 (function () {
     var vueIf = Vue.directive('if');
@@ -52,7 +53,7 @@ Vue.directive('ez-model', {
         var $el = $(self.el);
         var options = this.params.options || {};
         var oldOnChange = options.onChange;
-        options.onChange = function (newVal, oldVal) {
+        options.onChange = function (newVal, _oldVal) {
             if (oldOnChange)
                 oldOnChange.apply(this, arguments);
             self.set(newVal);
